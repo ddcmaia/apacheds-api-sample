@@ -1,0 +1,166 @@
+# (Create if not already present; ignore "entryAlreadyExists" if they exist)
+dn: dc=people,dc=example,dc=com
+changetype: add
+objectClass: domain
+objectClass: top
+dc: people
+
+dn: dc=groups,dc=example,dc=com
+changetype: add
+objectClass: domain
+objectClass: top
+dc: groups
+
+# OUs under people
+dn: ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: organizationalUnit
+ou: GROUP - Users
+
+dn: ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: organizationalUnit
+ou: HeadOffice
+
+# Users (using uid as RDN)
+dn: uid=user1,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: user1
+sn: user1
+uid: user1
+mail: user1@example.com
+userPassword: secret123
+
+dn: uid=user2,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: user2
+sn: user2
+uid: user2
+mail: user2@example.com
+userPassword: secret123
+
+dn: uid=user3,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: user3
+sn: user3
+uid: user3
+mail: user3@example.com
+userPassword: secret123
+
+dn: uid=user4,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: user4
+sn: user4
+uid: user4
+mail: user4@example.com
+userPassword: secret123
+
+dn: uid=user5,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: user5
+sn: user5
+uid: user5
+mail: user5@example.com
+userPassword: secret123
+
+dn: uid=user6,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: user6
+sn: user6
+uid: user6
+mail: user6@example.com
+userPassword: secret123
+
+dn: uid=user7,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: user7
+sn: user7
+uid: user7
+mail: user7@example.com
+userPassword: secret123
+
+dn: uid=user8,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: user8
+sn: user8
+uid: user8
+mail: user8@example.com
+userPassword: secret123
+
+dn: uid=user9,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+changetype: add
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: user9
+sn: user9
+uid: user9
+mail: user9@example.com
+userPassword: secret123
+
+# Groups under groups (groupOfUniqueNames)
+dn: cn=GG_ADMINS,dc=groups,dc=example,dc=com
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: GG_ADMINS
+owner: uid=user1,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+uniqueMember: uid=user1,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+uniqueMember: uid=user2,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+uniqueMember: uid=user3,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+
+dn: cn=GG_DEVELOPERS,dc=groups,dc=example,dc=com
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: GG_DEVELOPERS
+owner: uid=user4,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+uniqueMember: uid=user4,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+uniqueMember: uid=user5,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+uniqueMember: uid=user6,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+
+dn: cn=GU_AUDITORS,dc=groups,dc=example,dc=com
+changetype: add
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: GU_AUDITORS
+owner: uid=user7,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+uniqueMember: uid=user7,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+uniqueMember: uid=user8,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+uniqueMember: uid=user9,ou=HeadOffice,ou=GROUP - Users,dc=people,dc=example,dc=com
+
