@@ -1,0 +1,42 @@
+# Custom schema for group owner attribute and object class
+
+dn: cn=custom,ou=schema
+changetype: add
+objectClass: top
+objectClass: metaSchema
+cn: custom
+m-dependencies: system
+
+dn: ou=attributeTypes,cn=custom,ou=schema
+changetype: add
+objectClass: top
+objectClass: organizationalUnit
+ou: attributeTypes
+
+dn: ou=objectClasses,cn=custom,ou=schema
+changetype: add
+objectClass: top
+objectClass: organizationalUnit
+ou: objectClasses
+
+dn: m-oid=1.3.6.1.4.1.55555.1,ou=attributeTypes,cn=custom,ou=schema
+changetype: add
+objectClass: metaAttributeType
+objectClass: metaTop
+m-oid: 1.3.6.1.4.1.55555.1
+m-name: groupOwner
+m-description: Custom attribute for group owner
+m-equality: distinguishedNameMatch
+m-syntax: 1.3.6.1.4.1.1466.115.121.1.12
+m-singleValue: TRUE
+
+dn: m-oid=1.3.6.1.4.1.55555.2,ou=objectClasses,cn=custom,ou=schema
+changetype: add
+objectClass: metaObjectClass
+objectClass: metaTop
+m-oid: 1.3.6.1.4.1.55555.2
+m-name: groupWithOwner
+m-description: groupOfUniqueNames with groupOwner attribute
+m-supObjectClass: groupOfUniqueNames
+m-typeObjectClass: STRUCTURAL
+m-must: groupOwner

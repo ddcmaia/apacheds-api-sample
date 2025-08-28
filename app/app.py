@@ -9,6 +9,7 @@ from groups.create import create_group
 from groups.delete import delete_group
 from groups.members import remove_user_from_group
 from groups.search import search_groups
+from groups.owner import set_group_owner
 
 app = Flask(__name__)
 
@@ -23,6 +24,7 @@ app.add_url_rule('/groups', view_func=create_group, methods=['POST'])
 app.add_url_rule('/groups/<group>', view_func=delete_group, methods=['DELETE'])
 app.add_url_rule('/groups/<group>/members/<uid>', view_func=remove_user_from_group, methods=['DELETE'],
 )
+app.add_url_rule('/groups/<group>/owner/<uid>', view_func=set_group_owner, methods=['PUT'])
 app.add_url_rule('/groups', view_func=search_groups, methods=['GET'])
 
 

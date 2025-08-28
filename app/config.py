@@ -8,7 +8,13 @@ LDAP_PASSWORD = os.environ.get('LDAP_PASSWORD', 'secret')
 BASE_DN = os.environ.get('BASE_DN', 'dc=example,dc=com')
 PEOPLE_BASE = f'dc=people,{BASE_DN}'
 GROUPS_BASE = f'dc=groups,{BASE_DN}'
-USER_OU = f'ou=HeadOffice,ou=GROUP - Users,{PEOPLE_BASE}'
+USER_OU = f'ou=Matriz,ou=OrgUsers,{PEOPLE_BASE}'
+GROUP_OWNER_ATTR = 'groupOwner'
+
+# Audit log configuration
+AUDIT_LOG = os.environ.get('AUDIT_LOG', 'audit.log')
+AUDIT_BUCKET = os.environ.get('AUDIT_BUCKET')
+ENABLE_AUDIT_BUCKET = os.environ.get('ENABLE_AUDIT_BUCKET', 'false').lower() == 'true'
 
 def get_connection():
     server = Server(LDAP_HOST, port=LDAP_PORT, get_info=ALL)

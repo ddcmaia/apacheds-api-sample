@@ -45,6 +45,7 @@ if [ -n "${ACCESS_CONTROL_ENABLED}" ]; then
   ldapmodify -c -a -f /tmp/access_config.ldif -h localhost -p 10389 -D "uid=admin,ou=system" -w ${ADMIN_PASSWORD}
 fi
 
+ldapmodify -c -a -f /ldifs/group-owner-schema.ldif -h localhost -p 10389 -D "uid=admin,ou=system" -w ${ADMIN_PASSWORD}
 ldapmodify -c -a -f /ldifs/seed.ldif -h localhost -p 10389 -D "uid=admin,ou=system" -w ${ADMIN_PASSWORD}
 
 enable_replication

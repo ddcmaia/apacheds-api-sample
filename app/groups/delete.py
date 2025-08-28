@@ -1,7 +1,9 @@
 from flask import jsonify
-from ldap3 import BASE
+from ldap3 import BASE, MODIFY_DELETE
 
+from audit.audit import log_action
 from config import get_connection, GROUPS_BASE
+from utils import find_parent_owner
 
 
 def delete_group(group):
@@ -16,7 +18,12 @@ def delete_group(group):
         return jsonify({'error': 'group is not empty'}), 400
     ok = conn.delete(group_dn)
     result = conn.result
-    conn.unbind()
     if ok and result['description'] == 'success':
+        parent_dn, _ = find_parent_owner(conn, group_dn)
+        if parent_dn:
+            conn.modify(parent_dn, {'uniqueMember': [(MODIFY_DELETE, [group_dn])]})
+        log_action('delete_group', cn=group)
+        conn.unbind()
         return jsonify({'status': 'deleted'}), 200
+    conn.unbind()
     return jsonify({'error': result}), 400
