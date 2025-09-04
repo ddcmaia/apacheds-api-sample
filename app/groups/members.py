@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from ldap3 import BASE, MODIFY_DELETE, MODIFY_REPLACE
+from ldap3 import BASE, MODIFY_ADD, MODIFY_DELETE, MODIFY_REPLACE
 
 from audit.audit import log_action
 from config import get_connection, GROUPS_BASE, USER_OU, GROUP_OWNER_ATTR
@@ -43,6 +43,14 @@ def remove_user_from_group(group, uid):
         parent_dn, parent_owner = find_parent_owner(conn, group_dn)
         if parent_owner:
             changes[GROUP_OWNER_ATTR] = [(MODIFY_REPLACE, [parent_owner])]
+            # move removed owner to parent group if necessary
+            if parent_dn and conn.search(parent_dn, '(objectClass=*)', BASE, attributes=['uniqueMember']):
+                parent_members = set(getattr(conn.entries[0], 'uniqueMember', []))
+                if user_dn not in parent_members:
+                    conn.modify(parent_dn, {'uniqueMember': [(MODIFY_ADD, [user_dn])]})
+            if parent_dn:
+                parent_cn = parent_dn.split(',', 1)[0][3:]
+                log_action('move_user_to_parent_group', uid=uid, from_group=group, to_group=parent_cn)
         else:
             conn.unbind()
             return jsonify({'error': 'cannot remove owner; no parent owner found'}), 400

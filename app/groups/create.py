@@ -1,5 +1,5 @@
 from flask import request, jsonify
-from ldap3 import BASE, MODIFY_ADD
+from ldap3 import BASE, SUBTREE, MODIFY_ADD
 
 from audit.audit import log_action
 from config import get_connection, GROUPS_BASE, USER_OU, GROUP_OWNER_ATTR
@@ -11,24 +11,24 @@ def create_group():
     members = data.get('members') or []
     owner = data.get('owner')
     parent = data.get('parent')
-    if not cn or not members or not owner:
-        return jsonify({'error': 'cn, members and owner are required'}), 400
-    if not (cn.startswith('GU_') or cn.startswith('GG_')):
-        return jsonify({'error': 'group name must start with GU_ or GG_'}), 400
+    if not cn or not owner:
+        return jsonify({'error': 'cn and owner are required'}), 400
+    if not cn.startswith('GG_'):
+        return jsonify({'error': 'group name must start with GG_'}), 400
     group_dn = f'cn={cn},{GROUPS_BASE}'
     conn = get_connection()
     parent_dn = None
-    if cn.startswith('GG_'):
-        if not parent or not parent.startswith('GU_'):
+    if parent:
+        if not parent.startswith('GG_'):
             conn.unbind()
-            return jsonify({'error': 'GG_ groups require a parent GU_ group'}), 400
+            return jsonify({'error': 'parent group must start with GG_'}), 400
         parent_dn = f'cn={parent},{GROUPS_BASE}'
         if not conn.search(parent_dn, '(objectClass=groupOfUniqueNames)', BASE, attributes=['uniqueMember']):
             conn.unbind()
             return jsonify({'error': 'parent group not found'}), 404
-    elif parent:
-        conn.unbind()
-        return jsonify({'error': 'GU_ groups cannot have a parent'}), 400
+        if conn.search(GROUPS_BASE, f'(uniqueMember={parent_dn})', SUBTREE, attributes=['dn']):
+            conn.unbind()
+            return jsonify({'error': 'parent group cannot be a subgroup'}), 400
 
     valid_members = []
     for m in members:

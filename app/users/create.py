@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from ldap3 import BASE
 
+from audit.audit import log_action
 from config import get_connection, USER_OU
 
 
@@ -26,5 +27,6 @@ def create_user():
     result = conn.result
     conn.unbind()
     if ok and result['description'] == 'success':
+        log_action('create_user', uid=uid)
         return jsonify({'status': 'created', 'dn': user_dn}), 201
     return jsonify({'error': result}), 400

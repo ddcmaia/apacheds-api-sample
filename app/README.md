@@ -15,7 +15,9 @@ curl -X POST http://localhost:5034/users \
   -d '{"uid":"user1","cn":"User One","sn":"One"}'
 ```
 
-#### Delete user
+#### Deactivate user
+Removes the user from all groups, marks the entry with `accountStatus=inactive`
+and moves it to a dedicated `Desativados` OU instead of deleting it.
 ```bash
 curl -X DELETE http://localhost:5034/users/user1
 ```
@@ -26,6 +28,7 @@ curl -X PUT http://localhost:5034/users/user7/move \
   -H 'Content-Type: application/json' \
   -d '{"from":"GG_Auditors","to":"GG_Admins"}'
 ```
+Moving a user out of a group also removes them as the group's owner. Ownership is reassigned to the parent group's owner so that the departing user becomes only a member of the new group. A group owner can never be outside the group they own.
 
 #### Search users
 ```bash
@@ -38,7 +41,7 @@ curl "http://localhost:5034/users?q=(uid=user1)"
 ```bash
 curl -X POST http://localhost:5034/groups \
   -H 'Content-Type: application/json' \
-  -d '{"cn":"GG_Test","members":["uid=user1,ou=Matriz,ou=OrgUsers,dc=people,dc=example,dc=com"],"owner":"user1","parent":"GU_Engineering"}'
+  -d '{"cn":"GG_Test","members":["uid=user1,ou=Matriz,ou=OrgUsers,dc=people,dc=example,dc=com"],"owner":"user1","parent":"GG_Engineering"}'
 ```
 
 #### Delete group

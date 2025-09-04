@@ -167,32 +167,32 @@ uniqueMember: uid=user7,ou=Matriz,ou=OrgUsers,dc=people,dc=example,dc=com
 uniqueMember: uid=user8,ou=Matriz,ou=OrgUsers,dc=people,dc=example,dc=com
 uniqueMember: uid=user9,ou=Matriz,ou=OrgUsers,dc=people,dc=example,dc=com
 
-dn: cn=GU_Engineering,dc=groups,dc=example,dc=com
+dn: cn=GG_Engineering,dc=groups,dc=example,dc=com
 changetype: add
 objectClass: groupOfUniqueNames
 objectClass: top
 objectClass: groupWithOwner
-cn: GU_Engineering
+cn: GG_Engineering
 groupOwner: uid=user1,ou=Matriz,ou=OrgUsers,dc=people,dc=example,dc=com
 uniqueMember: cn=GG_Admins,dc=groups,dc=example,dc=com
 uniqueMember: cn=GG_Developers,dc=groups,dc=example,dc=com
 
-dn: cn=GU_Governance,dc=groups,dc=example,dc=com
+dn: cn=GG_Governance,dc=groups,dc=example,dc=com
 changetype: add
 objectClass: groupOfUniqueNames
 objectClass: top
 objectClass: groupWithOwner
-cn: GU_Governance
+cn: GG_Governance
 groupOwner: uid=user7,ou=Matriz,ou=OrgUsers,dc=people,dc=example,dc=com
 uniqueMember: cn=GG_Auditors,dc=groups,dc=example,dc=com
 
-dn: cn=GU_Tech,dc=groups,dc=example,dc=com
+dn: cn=GG_Tech,dc=groups,dc=example,dc=com
 changetype: add
 objectClass: groupOfUniqueNames
 objectClass: top
 objectClass: groupWithOwner
-cn: GU_Tech
+cn: GG_Tech
 groupOwner: uid=user1,ou=Matriz,ou=OrgUsers,dc=people,dc=example,dc=com
-uniqueMember: cn=GU_Engineering,dc=groups,dc=example,dc=com
-uniqueMember: cn=GU_Governance,dc=groups,dc=example,dc=com
+uniqueMember: cn=GG_Engineering,dc=groups,dc=example,dc=com
+uniqueMember: cn=GG_Governance,dc=groups,dc=example,dc=com
 

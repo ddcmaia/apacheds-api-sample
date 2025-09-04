@@ -11,8 +11,14 @@ def search_users():
         result = conn.result
         conn.unbind()
         return jsonify({'error': result}), 400
-    results = []
-    for entry in conn.entries:
-        results.append({'dn': entry.entry_dn, 'uid': entry.uid.value, 'cn': entry.cn.value, 'sn': entry.sn.value})
+    results = [
+        {
+            'dn': entry.entry_dn,
+            'uid': entry.uid.value,
+            'cn': entry.cn.value,
+            'sn': entry.sn.value,
+        }
+        for entry in conn.entries
+    ]
     conn.unbind()
     return jsonify(results)

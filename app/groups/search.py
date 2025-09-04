@@ -13,18 +13,15 @@ def search_groups():
         return jsonify({'error': result}), 400
     results = []
     for entry in conn.entries:
-        members_attr = getattr(entry, 'uniqueMember', None)
-        members = members_attr.values if members_attr else []
-        owner_attr = getattr(entry, GROUP_OWNER_ATTR, None)
-        owner = owner_attr.value if owner_attr else None
+        attrs = entry.entry_attributes_as_dict
+        members = attrs.get('uniqueMember', [])
+        owner = attrs.get(GROUP_OWNER_ATTR, [None])[0]
         parent_dn, parent_owner = find_parent_owner(conn, entry.entry_dn)
-        parent = None
-        if parent_dn:
-            parent = {'dn': parent_dn, 'owner': parent_owner}
+        parent = {'dn': parent_dn, 'owner': parent_owner} if parent_dn else None
         results.append(
             {
                 'dn': entry.entry_dn,
-                'cn': entry.cn.value,
+                'cn': attrs['cn'][0],
                 'members': members,
                 'owner': owner,
                 'parent': parent,

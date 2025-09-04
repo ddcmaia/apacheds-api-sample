@@ -9,6 +9,8 @@ BASE_DN = os.environ.get('BASE_DN', 'dc=example,dc=com')
 PEOPLE_BASE = f'dc=people,{BASE_DN}'
 GROUPS_BASE = f'dc=groups,{BASE_DN}'
 USER_OU = f'ou=Matriz,ou=OrgUsers,{PEOPLE_BASE}'
+# Disabled users are moved here instead of being deleted
+DISABLED_OU = f'ou=Desativados,ou=OrgUsers,{PEOPLE_BASE}'
 GROUP_OWNER_ATTR = 'groupOwner'
 
 # Audit log configuration

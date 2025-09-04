@@ -35,10 +35,10 @@ then
     /bin/echo -en "ApacheDS is running.\r\n"
     /bin/echo -en "\r\n"
 else
-    # ApacheDS is fine, return http 503
+    # ApacheDS está fora do ar
     /bin/echo -en "HTTP/1.1 503 Service Unavailable\r\n"
-    /bin/echo -en "Content-Length: 22"
-    /bin/echo -en "Content-Type: Content-Type: text/plain\r\n"
+    /bin/echo -en "Content-Length: 22\r\n"
+    /bin/echo -en "Content-Type: text/plain\r\n"
     /bin/echo -en "\r\n"
     /bin/echo -en "ApacheDS is *down*.\r\n"
     /bin/echo -en "\r\n"

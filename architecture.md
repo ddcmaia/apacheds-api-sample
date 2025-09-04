@@ -3,14 +3,14 @@
 ## Group and User Hierarchy
 ```mermaid
 graph TD
-    GU_Tech["GU_Tech"]
-    GU_Engineering["GU_Engineering"]
-    GU_Governance["GU_Governance"]
-    GU_Tech --> GU_Engineering
-    GU_Tech --> GU_Governance
-    GU_Engineering --> GG_Admins["GG_Admins"]
-    GU_Engineering --> GG_Developers["GG_Developers"]
-    GU_Governance --> GG_Auditors["GG_Auditors"]
+    GG_Tech["GG_Tech"]
+    GG_Engineering["GG_Engineering"]
+    GG_Governance["GG_Governance"]
+    GG_Tech --> GG_Engineering
+    GG_Tech --> GG_Governance
+    GG_Engineering --> GG_Admins["GG_Admins"]
+    GG_Engineering --> GG_Developers["GG_Developers"]
+    GG_Governance --> GG_Auditors["GG_Auditors"]
     GG_Admins --> user1["user1"]
     GG_Admins --> user2["user2"]
     GG_Admins --> user3["user3"]
@@ -38,9 +38,9 @@ sequenceDiagram
     else no other owner
         API->>LDAP: Inherit groupOwner from parent group
     end
-    API->>LDAP: Remove user1
-    LDAP-->>API: Confirm removal
-    API->>Audit: Record deletion
+    API->>LDAP: Mark user1 inactive and move to Desativados OU
+    LDAP-->>API: Confirm deactivation
+    API->>Audit: Record deactivation
     API-->>Client: 200 OK
 ```
 
